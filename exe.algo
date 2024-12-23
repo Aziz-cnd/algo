@@ -1,0 +1,44 @@
+    sentence: STRING;
+    char_count, word_count, voyel_count: INTEGER;
+    word: BOOLEAN;
+    i: INTEGER;
+    // Initialize the variables
+    char_count := 0;  
+    word_count := 0;  
+    voyel_count := 0; 
+    word := FALSE; 
+
+    // Input the sentence
+    WRITE("Enter sentence");
+    READ(sentence);
+
+    // Loop through each character of the sentence
+    FOR i FROM 0 TO Length(sentence) - 1 DO
+        // Count characters (including spaces)
+        char_count := char_count + 1;
+
+        // Count vowels (a, e, i, o, u, A, E, I, O, U)
+        IF sentence[i] IN ('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U') THEN
+            voyel_count := voyel_count + 1;
+        END_IF
+
+        // Count words (when space is encountered and previous character is part of a word)
+        IF sentence[i] = ' ' AND word = TRUE THEN
+            word_count := word_count + 1;
+            word := FALSE;  // End of current word
+        ELSE IF sentence[i] != ' ' THEN
+            word := TRUE;  // We're inside a word
+        END_IF
+    END_FOR
+
+    // If last word doesn't end with a space, count it
+    IF word = TRUE THEN
+        word_count := word_count + 1;
+    END_IF
+
+    // Display the results
+    WRITE("Length of the sentence: ", char_count);
+    WRITE("Number of words in the sentence: ", word_count);
+    WRITE("Number of vowels in the sentence: ", voyel_count);
+
+END
